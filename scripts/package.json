@@ -1,0 +1,41 @@
+{
+  "name": "firefly-registrar",
+  "version": "0.0.1",
+  "description": "The ENS registrar for firefly.eth.",
+  "main": "index.js",
+  "dependencies": {
+    "bip39": "2.3.0",
+    "ethers": "^2.1.0",
+    "ethers-cli": "1.0.2",
+    "ethereumjs-testrpc": "^3.0.5",
+    "readline-sync": "1.4.4",
+    "solc": "0.4.10"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --timeout 6000000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firefly/registrar.git"
+  },
+  "keywords": [
+    "firefly",
+    "hardware",
+    "wallet",
+    "ethereum",
+    "registrar",
+    "ens"
+  ],
+  "author": "Richard Moore <me@ricmoo.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firefly/registrar/issues"
+  },
+  "homepage": "https://github.com/firefly/registrar"
+}

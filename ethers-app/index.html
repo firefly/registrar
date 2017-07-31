@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Your Title Here</title>
+        <style type="text/css">
+            html {
+                color: #6196BC;
+                font-family: sans-serif;
+                font-size: 1.1em;
+                line-height: 2.6ex;
+                margin: 0;
+            }
+
+            body {
+                margin: 60px 0 70px;
+            }
+
+            h1 {
+                margin-bottom: 35px;
+            }
+
+            .clearfix {
+                clear: both;
+            }
+
+            .right {
+                text-align: right;
+            }
+
+            .no-wrap {
+                font-family: monospace;
+                word-break: break-all;
+            }
+
+            a {
+                border-bottom: 1px dashed #376589;
+                color: #376589;
+                text-decoration: none;
+            }
+
+            a:hover {
+                border-bottom: 1px dashed #74a4c7;
+                color: #74a4c7;
+            }
+
+            .centerer {
+                margin-left: 50%;
+            }
+            .centered {
+                margin-left: -400px;
+                width: 800px;
+            }
+
+            div.code {
+                border: 2px dashed #629dcb;
+                color: #376589;
+                font-family: monospace;
+                margin-bottom: 40px;
+                padding: 20px 30px;
+                white-space: pre;
+            }
+
+            div.hr {
+                border-top: 1px solid #376589;
+                height: 0px;
+                margin: 50px 0px;
+            }
+
+            #choose-name {
+                position: relative;
+                line-height: 40px;
+            }
+
+            #choose-name input {
+                border: none;
+                font-family: sans-serif;
+                font-size: 26px;
+                font-weight: bold;
+                margin: 0;
+                outline: none;
+                padding: 0;
+                position: absolute;
+                left: 0;
+                line-height: 40px;
+                top: 0;
+                width: 500px;
+            }
+
+            #mirror.empty {
+                font-style: italic;
+                font-weight: normal;
+                opacity: 0.5;
+            }
+
+            #choose-name input[type="text"] {
+                text-transform: lowercase;
+            }
+
+            #choose-name .mirror {
+                font-family: sans-serif;
+                font-size: 26px;
+                font-weight: bold;
+                line-height: 40px;
+                position: absolute;
+                pointer-events: none;
+                left: 0;
+                top: 0;
+            }
+
+            #mirror {
+                opacity: 0;
+                padding-right: 2px;
+            }
+
+            #status {
+                background-position: left;
+                float: right;
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 40px;
+                padding-left: 40px;
+                background-repeat: no-repeat;
+                ddd-border: 1px solid blue;
+                min-width: 130px;
+                dddtext-align: center;
+            }
+
+            #status.ok {
+                background-image: url(./images/status-ok.png);
+            }
+
+            #status.bad {
+                background-image: url(./images/status-bad.png);
+            }
+
+            #status.pending {
+                background-image: url(./images/status-pending.gif);
+            }
+
+            #choose-amount {
+            }
+
+            #choose-amount input[type="range"] {
+                width: 500px;
+            }
+
+            #choose-amount span {
+                font-family: sans-serif;
+                font-size: 1.2em;
+                padding-left: 20px;
+                line-height: 50px;
+            }
+
+
+            /* START:http://danielstern.ca/range.css/#/ */
+            input[type=range] {
+                -webkit-appearance: none;
+                width: 100%;
+                margin: 8px 0;
+            }
+            input[type=range]:focus {
+                outline: none;
+            }
+            input[type=range]::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 10px;
+                cursor: pointer;
+                background: rgba(98, 157, 203, 0.78);
+                border-radius: 5px;
+                border: 2px solid #376589;
+            }
+            input[type=range]::-webkit-slider-thumb {
+                border: 2px solid #376589;
+                height: 26px;
+                width: 26px;
+                border-radius: 15px;
+                background: #ffffff;
+                cursor: pointer;
+                -webkit-appearance: none;
+                margin-top: -10px;
+            }
+            input[type=range]:focus::-webkit-slider-runnable-track {
+                background: rgba(98, 157, 203, 0.78);
+            }
+            input[type=range]::-moz-range-track {
+                width: 100%;
+                height: 10px;
+                cursor: pointer;
+                background: rgba(98, 157, 203, 0.78);
+                border-radius: 5px;
+                border: 2px solid #376589;
+            }
+            input[type=range]::-moz-range-thumb {
+                border: 2px solid #376589;
+                height: 26px;
+                width: 26px;
+                border-radius: 15px;
+                background: #ffffff;
+                cursor: pointer;
+            }
+            input[type=range]::-ms-track {
+                width: 100%;
+                height: 10px;
+                cursor: pointer;
+                background: transparent;
+                border-color: transparent;
+                color: transparent;
+            }
+            input[type=range]::-ms-fill-lower {
+                background: rgba(98, 157, 203, 0.78);
+                border: 2px solid #376589;
+                border-radius: 10px;
+            }
+            input[type=range]::-ms-fill-upper {
+                background: rgba(98, 157, 203, 0.78);
+                border: 2px solid #376589;
+                border-radius: 10px;
+            }
+            input[type=range]::-ms-thumb {
+                border: 2px solid #376589;
+                height: 26px;
+                width: 26px;
+                border-radius: 15px;
+                background: #ffffff;
+                cursor: pointer;
+                height: 10px;
+            }
+            input[type=range]:focus::-ms-fill-lower {
+                background: rgba(98, 157, 203, 0.78);
+            }
+            input[type=range]:focus::-ms-fill-upper {
+                background: rgba(98, 157, 203, 0.78);
+            }
+            /* END:http://danielstern.ca/range.css/#/ */
+
+
+            #step-3 {
+                transition: opacity 0.1s linear;
+            }
+
+            #step-3.inactive {
+                opacity: 0.3;
+                pointer-events: none;
+            }
+
+            #step-3.inactive .option {
+                display: none;
+            }
+
+            #step-3 .invalid {
+                color: #000;
+                display: none;
+                height: 100px;
+                line-height: 100px;
+                text-align: center;
+            }
+
+            #step-3.inactive .invalid {
+                display: block;
+            }
+
+            div.table-heading {
+                font-weight: bold;
+                font-size: 1.2em;
+                margin-bottom: 25px;
+            }
+
+            th {
+                vertical-align: top;
+                padding-bottom: 14px;
+                padding-right: 20px;
+                text-align: left;
+                white-space: nowrap;
+            }
+
+            td {
+                vertical-align: top;
+            }
+
+            .tabs {
+                margin-bottom: 55px;
+            }
+
+            .tabs .tab {
+                border-bottom: 3px solid #376589;
+                cursor: pointer;
+                float: left;
+                font-weight: bold;
+                text-align: center;
+                margin-right: 40px;
+                opacity: 0.4;
+                padding-bottom: 10px;
+                transition: opacity 0.3s linear;
+                width: 200px;
+            }
+
+            .tabs div.tab.selected {
+               opacity: 1;
+            }
+
+            .tabs div.tab:hover {
+                opacity: 1;
+            }
+
+            .center {
+                text-align: center;
+            }
+
+            p {
+                margin-bottom: 50px;
+            }
+
+            .step {
+                margin-bottom: 30px;
+            }
+
+            .step .heading {
+                font-weight: bold;
+                height: 50px;
+                margin-bottom: 15px;
+            }
+
+            .step .heading span.bullet {
+                border: 2px solid #376589;
+                border-radius: 28px;
+                color: #376589;
+                display: inline-block;
+                font-size: 22px;
+                height: 50px;
+                line-height: 52px;
+                margin-right: 14px;
+                padding-left: 2px;
+                text-align: center;
+                width: 48px;
+                vertical-align: middle;
+            }
+
+            .step .heading span.title {
+                vertical-align: middle;
+                font-size: 30px;
+                line-height: 50px;
+            }
+
+            .step .info {
+                padding: 0 0 20px 76px;
+            }
+
+            .button {
+                border: 2px solid #376589;
+                border-radius: 6px;
+                cursor: pointer;
+                display: inline-block;
+                height: 64px;
+                padding: 16px;
+                width: 400px;
+            }
+
+            .button.no-click {
+                cursor: auto;
+            }
+
+            .logo {
+                display: inline-block;
+                float: left;
+                height: 64px;
+                width: 64px;
+            }
+
+            .metamask.logo {
+                background: url(/images/metamask.png);
+                background-size: contain;
+            }
+
+            .ethers.logo {
+                background: url(/images/ethers.png);
+                background-size: contain;
+            }
+
+            .button-info {
+                float: left;
+                font-weight: bold;
+                height: 60px;
+                padding: 2px 0;
+                text-align: center;
+                width: 334px;
+            }
+
+            .button-info.one-line {
+                line-height: 60px;
+            }
+
+            .button-info.two-line {
+                line-height: 30px;
+            }
+
+            .unit {
+                font-family: serif;
+                font-size: 0.95em;
+                dddfont-weight: bold;
+                padding-right: 1px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="centerer">
+            <div class="centered">
+                <div>
+                    <h1>Firefly Registrar and Crowdfund</h1>
+                    <p>
+                        Welcome to the Firefly Crowdsale. All funds raised through this
+                        campaign will be used for further <a href="https://firefly.city" target="_blank">Firefly</a>
+                        development, including
+                        the development of the <b>Firefly Teensy</b> product, a keychain sized,
+                        custom PCB Firefly with a flood-proof case and an optional fire-proof
+                        sleeve.
+                        <br /><br />
+                        Once registered, you become the owner of the ENS name. Do not lose your
+                        wallet or forget the password as we cannot reset it. Once registered the
+                        resovler is automatically configured to point to the buying address. As
+                        the owner you can change this any time and configure additional properties.
+                        <br /><br />
+                        Please note that there is currently a level of trust for the firefly.eth
+                        ENS name, as the deed is still owned by the Firefly team; in the future
+                        (once the permanent registrar is figured out), it will be placed in a
+                        trust-less holding contract.
+                        <br /><br />
+                        Thanks!
+                    </p>
+
+                    <div class="hr"></div>
+
+                    <div class="step">
+                        <div class="heading"><span class="bullet">1</span> <span class="title">Choose your name</span></div>
+                        <div class="info">
+                            Firefly sub-names are case-insensitive and must be between 4 and 20
+                            alphanumeric characters (a-z, 0-9) and may have hyphens (-).
+                            <br /><br />
+                            Please avoid using punycode,
+                            for reasons which will make sense in the future &mdash; if you don't know
+                            what punycode is, you have nothing to worry about.
+                        </div>
+                        <div class="info">
+                            <div id="choose-name"><input placeholder="" spellcheck="false" type="text" value="" /><span class="mirror"><span class="empty" id="mirror">your-name-here</span>.firefly.eth</span>&nbsp;<div id="status"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="heading"><span class="bullet">2</span> <span class="title">Pick a price</span></div>
+                        <div class="info">
+                            The minimum fee for a firefly.eth ENS name is
+                            <span class="unit">&Xi;</span>0.1, any additional donation is completely voluntary.
+                            <br /><br />
+                            All donations are tallied by the contract, which will be used when
+                            determining future rewards and discounts.
+                        </div>
+                        <div class="info">
+                            <div id="choose-amount"><input type="range" min="0.1" max="3.14" step="0.01" value="0.1"><span>&Xi; 0.1</span></div>
+                        </div>
+                    </div>
+                    <div id="step-3" class="step inactive">
+                        <div class="heading"><span class="bullet">3</span> <span class="title">Select your Wallet</span></div>
+                        <div class="info">
+                            <div class="tabs">
+                                <div class="clearfix"></div>
+                                <div class="tab selected" data-option="ethers">ethers.io</div>
+                                <div class="tab" data-option="metamask">MetaMask</div>
+                                <div class="tab" data-option="wallet">MyEtherWallet / Jaxx</div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="center option ethers">
+                                <div class="clearfix"></div>
+                                <div class="button ethers-account">
+                                    <div class="ethers logo"></div>
+                                    <div class="button-info two-line">No Account<br />Please create an account above</div>
+                                </div>
+                                <div id="button-ethers" class="button ethers-account ethers-required">
+                                    <div class="ethers logo"></div>
+                                    <div class="button-info two-line">Register with Ethers.io &mdash;<br /><i><span class="populate-name"></span>.firefly.eth</i></div>
+                                 </div>
+                                 <div class="clearfix"></div>
+                            </div>
+                            <div class="center option metamask">
+                                <div class="clearfix"></div>
+                                <div class="button metamask metamask-install">
+                                    <div class="metamask logo"></div>
+                                    <div class="button-info two-line">MetaMask not installed.<br /><a href="https://metamask.io" target="_blank">Download it</a>.</div>
+                                </div>
+                                <div class="button metamask no-click metamask-unlock">
+                                    <div class="metamask logo"></div>
+                                    <div class="button-info two-line">MetaMask is Locked &mdash;<br />Click MetaMask to Enable</div>
+                                </div>
+                                <div id="button-metamask" class="button metamask metamask-ready">
+                                    <div class="metamask logo"></div>
+                                    <div class="button-info two-line">Register with MetaMask &mdash;<br /><i><span class="populate-name"></span>.firefly.eth</i></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="option wallet" id="output-wallet">
+                                <p>
+                                  If you are using a wallet such as
+                                  <a href="https://www.myetherwallet.com" target="_blank">MyEtherWallet</a> or
+                                  <a href="https://jaxx.io/" target="_blank">Jaxx</a>, prepare a transaction with
+                                  the following options:
+                                </p>
+                                <div class="table-heading"><span class="populate-name"></span>.firefly.eth</div>
+                                <table>
+                                    <tr><th>To Address:</th><td class="populate-address"></td></tr>
+                                    <tr><th>Amount to Send:</th><td><span class="unit">&Xi;</span> <span class="populate-value"></span></td></tr>
+                                    <tr><th>Gas Limit:</th><td class="populate-gaslimit"></td></tr>
+                                    <tr><th>Data:</th><td class="populate-data no-wrap"></td></tr>
+                                </table>
+                            </div>
+                            <div class="invalid">
+                                <div>Please select a valid name in Step 1.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr"></div>
+                <div>
+                    <h2>Alternative Method: Command Line using ethers-ens</h2>
+                    <p>
+                        If you are more comfortable with the terminal and a command-line, the
+                        <a href="https://www.npmjs.com/package/ethers-ens" target="_blank">ethers-ens</a> tool
+                        supports registering on simple registrars, like the
+                        <a href="https://etherscan.io/address/0x6fc21092da55b392b045ed78f4732bff3c580e2c" target="_blank">registrar.firefly.eth</a>
+                        contract.
+                    </p>
+
+                    <h3>Installing ethers-ens</h3>
+                    <div class="code"><b>/Users/ethers></b> sudo npm install -g ethers-ens</div>
+
+                    <h3>Registering <i>your-name-here</i>.firefly.eth</h3>
+                    <div class="code"><b>/Users/ethers></b> ethers-ens --account wallet.json register <i>your-name-here</i>.firefly.eth</div>
+                </div>
+                <div class="hr"></div>
+                <!--
+                <div>
+                    <h2>Alternate Method: Mist</h2>
+                    <code>
+                    </code>
+                </div>
+                <div class="hr"></div>
+                <div>
+                    <h2>Alternate Method: Parity or Geth with its console</h2>
+                    <div class="code">&gt; // Change this! Must be between 4 and 20 characters long, a-z, 0-9 and -
+&gt; // Lowercase only
+&gt; var myName = "your-name-here";
+&gt; var amount = "0.1";
+&gt; var abi = []
+
+&gt; var fireflyContract = new web3.Contract(contractAddress, abi);
+&gt; fireflyContract.register(myName, {
+    value: amount,
+    from: eth.accounts[0],
+    gas: LOW,
+    gasPrice: web3.toWei('4.1', 'shannon')
+});</div>
+                </div>
+                <div class="hr"></div>
+                -->
+                <div>
+                    <h2>Registrar Contract</h2>
+                    <table>
+                        <tr><th>Contract Address:</th><td><a href="https://etherscan.io/address/0x6fc21092da55b392b045ed78f4732bff3c580e2c" target="_blank"><code>0x6fC21092DA55B392b045eD78F4732bff3C580e2c</code></a></td></tr>
+                        <tr><th>Source code and ABI:</th><td><a href="https://etherscan.io/address/0x6fc21092da55b392b045ed78f4732bff3c580e2c#code" target="_blank">Verified Source Code</a></td></tr>
+                    </table>
+                </div>
+                <div class="hr"></div>
+                <div>
+                    <h2>Testnet</h2>
+                    <p>
+                        For any developers wishing to build tools or people getting into Ethereum,
+                        this registrar is fully deployed and works on the Ropsten testnet at the
+                        same contract address, and is configured in the Ropsten ENS service.
+                        <br /></br >
+                        The source code for the registrar and this front end are also all
+                        available on the <a href="https://github.com/firefly/registrar" target="_blank">GitHub Project</a> page.
+                    </p>
+                </div>
+                <div class="hr"></div>
+                <div>
+                    <h2>Questions?</h2>
+                    <p>
+                        Have any questions? Contact us at <a href="mailto:hi@firefly.city">hi@firefly.city</a>.
+                    </p>
+                </div>
+                <div class="hr"></div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://cdn.ethers.io/scripts/ethers-app-v0.2.min.js"></script>
+        <script type="text/javascript">
+
+            if (window === window.parent) {
+                alert('This site should only be used from within Ethers.io');
+                
+            }
+
+            var ens = (function() {
+                var abi = [
+                    {"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"owner","outputs":[{"name":"addr","type":"address"}],"payable":false,"type":"function"},
+                ];
+                //var contractAddress = '0x112234455c3a32fd11230c42e7bccd4a84e02010';
+                var contractAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
+
+                return ethers.getContract(contractAddress, abi);
+            })();
+
+            var registrar = (function() {
+                var abi = [
+                    {"constant":true,"inputs":[],"name":"config","outputs":[{"name":"ens","type":"address"},{"name":"nodeHash","type":"bytes32"},{"name":"admin","type":"address"},{"name":"fee","type":"uint256"},{"name":"defaultResolver","type":"address"}],"payable":false,"type":"function"},
+                    {"constant":true,"inputs":[{"name":"nodeHash","type":"bytes32"}],"name":"donations","outputs":[{"name":"donation","type":"uint256"}],"payable":false,"type":"function"},
+                    {"constant":false,"inputs":[{"name":"nodeHash","type":"bytes32"}],"name":"donate","outputs":[],"payable":true,"type":"function"},
+                    {"constant":true,"inputs":[],"name":"stats","outputs":[{"name":"nameCount","type":"uint256"},{"name":"totalPaid","type":"uint256"},{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},
+                    {"constant":true,"inputs":[],"name":"fee","outputs":[{"name":"fee","type":"uint256"}],"payable":false,"type":"function"},
+                    {"constant":false,"inputs":[{"name":"label","type":"string"}],"name":"register","outputs":[],"payable":true,"type":"function"}
+                ];
+
+                var contractAddress = '0x6fC21092DA55B392b045eD78F4732bff3C580e2c';
+
+                return ethers.getContract(contractAddress, abi);
+            })();
+
+            function forEach(selector, callback) {
+                Array.prototype.forEach.call(document.querySelectorAll(selector), callback);
+            }
+
+            function populate(key, value) {
+                forEach('.populate-' + key, function(el) { el.textContent = value; });
+            }
+
+            // Update the account address
+            function updateAccount(address) {
+                console.log(address);
+                var showingEthers = !!address;
+
+                forEach('.ethers-account', function(el) {
+                    var required = el.classList.contains('ethers-required');
+                    if (required === showingEthers) {
+                            el.style.display = '';
+                    } else {
+                            el.style.display = 'none';
+                    }
+                });
+            }
+
+            // Get the current account
+            ethers.getAccount().then(function(address){
+                updateAccount(address);
+            });
+
+            // Whenever the account changes...
+            ethers.onaccount = updateAccount;
+
+            (function() {
+                var chooseName = document.querySelector('#choose-name input');
+                var chooseAmount = document.querySelector('#choose-amount input');
+                var showAmount = document.querySelector('#choose-amount span');
+                var submit = document.querySelector('#submit');
+
+                var mirror = document.getElementById('mirror');
+                var status = document.getElementById('status');
+
+                //var registerButton;
+
+                forEach('.tabs div.tab', function(el) {
+                    var option = el.getAttribute('data-option');
+                    function onclick() {
+                        // Deselect the current tab and select the new one
+                        forEach('.tabs div.tab.selected', function(el) {
+                            el.classList.remove('selected');
+                        });
+                        el.classList.add('selected');
+
+                        // Hide options and show selected option
+                        forEach('div.option', function(el) {
+                            if (el.classList.contains(option)) {
+                                el.style.display = '';
+                            } else {
+                                el.style.display = 'none';
+                            }
+                        });
+                    };
+
+                    el.onclick = onclick;
+
+                    // Select our initial tab
+                    if (option === 'ethers') { onclick(); }
+                });
+
+                //
+                var lastMetamaskButton = null;
+                function checkMetamask() {
+                    var metamaskButton = 'metamask-ready';
+
+                    var w = window.web3;
+
+                    // Metamask not installed
+                    if (!w  || !w.currentProvider || !w.currentProvider.isMetaMask) {
+                        metamaskButton = 'metamask-install';
+                    } else if (!w.eth || !w.eth.defaultAccount) {
+                        metamaskButton = 'metamask-unlock';
+                    }
+                    lastMetamaskButton = metamaskButton;
+
+                    forEach('.metamask.button', function(el) {
+                        console.log(el, el.classList.contains(metamaskButton), metamaskButton);
+                        if (el.classList.contains(metamaskButton)) {
+                                el.style.display = '';
+                        } else {
+                                el.style.display = 'none';
+                        }
+                    });
+                }
+                checkMetamask();
+                setInterval(checkMetamask, 1000);
+
+
+                var lastName = chooseName.value;;
+
+                chooseName.oninput = function() {
+                    var name = chooseName.value.toLowerCase();
+                    lastName = name;
+
+                    var step3 = document.getElementById('step-3');
+                    step3.classList.add('inactive');
+
+                    if (name.length) {
+                        mirror.classList.remove('empty');
+                        mirror.textContent = name;
+                    } else {
+                        mirror.classList.add('empty');
+                        mirror.textContent = 'your-name-here';
+                    }
+
+                    var reason = null;
+
+                    if (name.length === 0) {
+                        reason = ' ';
+                    } else if (name.length < 4) {
+                        reason = 'Too short!';
+                    } else if (name.length > 20) {
+                        reason = 'Too long!';
+                    } else if (!name.match(/^[a-z0-9-]*$/)) {
+                        reason = 'Invalid character!';
+                    }
+
+                    if (reason) {
+                        status.textContent = reason;
+                        status.classList.remove('pending');
+                        status.classList.remove('ok');
+                        if (reason !== ' ') {
+                            status.classList.add('bad');
+                        }
+
+                    } else {
+                        var value = ethers.parseEther(chooseAmount.value);
+                        var data = registrar.interface.functions.register(name).data;
+
+                        status.textContent = 'Checking...';
+                        status.classList.add('pending');
+                        status.classList.remove('ok');
+                        status.classList.remove('bad');
+
+                        // Lookup whether the name is available and update the status
+                        function updateStatus(name) {
+                            ens.owner(ethers.utils.namehash(name + '.firefly.eth')).then(function(result) {
+                                // The user has typed in a new address
+                                status.classList.remove('pending');
+                                if (name !== lastName) { return; }
+                                if (result.addr === '0x0000000000000000000000000000000000000000') {
+                                    status.textContent = 'Available!';
+                                    step3.classList.remove('inactive');
+                                    status.classList.add('ok');
+                                    status.classList.remove('bad');
+                                } else {
+                                    status.textContent = 'Already taken.';
+                                    status.classList.remove('ok');
+                                    status.classList.add('bad');
+                                }
+                            });
+                        }
+
+                        // Throttle calling the node for status updates
+                        (function(name) {
+                            setTimeout(function() {
+                                if (name !== lastName) { return; }
+                                updateStatus(name);
+                            }, 300);
+                        })(name);
+
+                        populate('name', name);
+                        populate('address', registrar.address);
+                        populate('gaslimit', '250000');
+                        populate('value', ethers.formatEther(value));
+                        populate('data', data);
+                    }
+                };
+
+                chooseAmount.oninput = function() {
+                    showAmount.textContent = ethers.etherSymbol + ' ' + chooseAmount.value;
+                };
+
+                //chooseName.focus();
+/*
+                submit.onclick = function() {
+                    console.log(submit);
+                    if (!submit.classList.contains('enabled')) { return; }
+                    var name = chooseName.value.toLowerCase();
+                    var amount = ethers.parseEther(chooseAmount.value);
+                    console.log(name, amount, act);
+                    contract.register(name, { value: amount }).then(function(tx) {
+                        console.log(tx);
+                    });
+                }
+                */
+
+                document.getElementById('button-ethers').onclick = function() {
+                    var name = chooseName.value.toLowerCase();
+                    var value = ethers.parseEther(chooseAmount.value);
+
+                    var options = {
+                        gasPrice: 20000000000,
+                        gasLimit: 250000,
+                        value: value,
+                    };
+
+                    registrar.register(name, options).then(function(tx) {
+                        console.log(tx);
+                    });
+                }
+
+                document.getElementById('button-metamask').onclick = function() {
+                    var name = chooseName.value.toLowerCase();
+                    var value = ethers.parseEther(chooseAmount.value);
+                    var data = registrar.interface.functions.register(name).data;
+
+                    var tx = {
+                        data: data,
+                        gasPrice: 20000000000,
+                        gasLimit: 250000,
+                        to: registrar.address,
+                        value: value.toHexString(),
+                    };
+                    console.log(tx);
+
+                    window.web3.eth.sendTransaction(tx, function(error, hash) {
+                        console.log(error, hash);
+                    });
+                }
+            })();
+        </script>
+    </body>
+</html>
+
