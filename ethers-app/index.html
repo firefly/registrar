@@ -235,6 +235,14 @@
             /* END:http://danielstern.ca/range.css/#/ */
 
 
+            .invalid {
+                color: #000;
+                display: none;
+                height: 100px;
+                line-height: 100px;
+                text-align: center;
+            }
+
             #step-3 {
                 transition: opacity 0.1s linear;
             }
@@ -248,15 +256,24 @@
                 display: none;
             }
 
-            #step-3 .invalid {
-                color: #000;
-                display: none;
-                height: 100px;
-                line-height: 100px;
-                text-align: center;
+            #step-3.inactive .invalid {
+                display: block;
             }
 
-            #step-3.inactive .invalid {
+            #step-4 {
+                transition: opacity 0.1s linear;
+            }
+
+            #step-4.inactive .info {
+                display: none;
+            }
+
+            #step-4.inactive {
+                opacity: 0.3;
+                pointer-events: none;
+            }
+
+            #step-4.inactive .invalid {
                 display: block;
             }
 
@@ -360,6 +377,11 @@
                 cursor: auto;
             }
 
+            .button.disable {
+                opacity: 0.4;
+                pointer-events: none;
+            }
+
             .logo {
                 display: inline-block;
                 float: left;
@@ -458,6 +480,7 @@
                             <div id="choose-amount"><input type="range" min="0.1" max="3.14" step="0.01" value="0.1"><span>&Xi; 0.1</span></div>
                         </div>
                     </div>
+
                     <div id="step-3" class="step inactive">
                         <div class="heading"><span class="bullet">3</span> <span class="title">Select your Wallet</span></div>
                         <div class="info">
@@ -514,6 +537,18 @@
                             <div class="invalid">
                                 <div>Please select a valid name in Step 1.</div>
                             </div>
+                        </div>
+                    </div>
+                    <div id="step-4" class="step inactive">
+                        <div class="heading"><span class="bullet">4</span> <span class="title">Confirm your registration</span></div>
+                        <div class="info">
+                            <table>
+                                <tr class="has-transaction"><th>Transaction Hash:</th><td><a class="populate-link-hash" target="_blank"></a></td></tr>
+                                <tr><th>Name Status:</th><td><a class="populate-link-name" target="_blank"></a></td></tr>
+                            </table>
+                        </div>
+                        <div class="invalid">
+                            <div>Waiting for a transaction.</div>
                         </div>
                     </div>
                 </div>
@@ -594,15 +629,14 @@
 
             if (window === window.parent) {
                 alert('This site should only be used from within Ethers.io');
-                
             }
 
             var ens = (function() {
                 var abi = [
                     {"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"owner","outputs":[{"name":"addr","type":"address"}],"payable":false,"type":"function"},
                 ];
-                //var contractAddress = '0x112234455c3a32fd11230c42e7bccd4a84e02010';
-                var contractAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
+                var contractAddress = '0x112234455c3a32fd11230c42e7bccd4a84e02010';
+                //var contractAddress = '0x314159265dd8dbb310642f98f50c066173c1259b';
 
                 return ethers.getContract(contractAddress, abi);
             })();
@@ -628,6 +662,18 @@
 
             function populate(key, value) {
                 forEach('.populate-' + key, function(el) { el.textContent = value; });
+                if (key === 'name') {
+                    forEach('.populate-link-' + key, function(el) {
+                        el.setAttribute('href', 'https://etherscan.io/enslookup?q=' + value + '.firefly.eth');
+                        el.textContent = value + '.firefly.eth';
+                    });
+                } else if (key === 'hash') {
+                    document.getElementById('step-4').classList.remove('inactive');
+                    forEach('.populate-link-' + key, function(el) {
+                        el.setAttribute('href', 'https://etherscan.io/tx/' + value);
+                        el.textContent = value;
+                    });
+                }
             }
 
             // Update the account address
@@ -662,8 +708,7 @@
                 var mirror = document.getElementById('mirror');
                 var status = document.getElementById('status');
 
-                //var registerButton;
-
+                // Step 3 - Select wallet
                 forEach('.tabs div.tab', function(el) {
                     var option = el.getAttribute('data-option');
                     function onclick() {
@@ -681,6 +726,13 @@
                                 el.style.display = 'none';
                             }
                         });
+                        if (option === 'wallet') {
+                            forEach('.has-transaction', function(el) { el.style.display = 'none'; });
+                            document.getElementById('step-4').classList.remove('inactive');
+                        } else {
+                            forEach('.has-transaction', function(el) { el.style.display = ''; });
+                            document.getElementById('step-4').classList.add('inactive');
+                        }
                     };
 
                     el.onclick = onclick;
@@ -689,7 +741,7 @@
                     if (option === 'ethers') { onclick(); }
                 });
 
-                //
+                // Poll for MetaMask state (installed? unlocked?) and update UI
                 var lastMetamaskButton = null;
                 function checkMetamask() {
                     var metamaskButton = 'metamask-ready';
@@ -799,35 +851,33 @@
                 };
 
                 chooseAmount.oninput = function() {
-                    showAmount.textContent = ethers.etherSymbol + ' ' + chooseAmount.value;
+                    var value = ethers.parseEther(chooseAmount.value);
+                    var ether = ethers.formatEther(value);
+                    showAmount.textContent = ethers.etherSymbol + ' ' + ether;
+                    populate('value', ether);
                 };
 
                 //chooseName.focus();
-/*
-                submit.onclick = function() {
-                    console.log(submit);
-                    if (!submit.classList.contains('enabled')) { return; }
-                    var name = chooseName.value.toLowerCase();
-                    var amount = ethers.parseEther(chooseAmount.value);
-                    console.log(name, amount, act);
-                    contract.register(name, { value: amount }).then(function(tx) {
-                        console.log(tx);
-                    });
-                }
-                */
 
                 document.getElementById('button-ethers').onclick = function() {
                     var name = chooseName.value.toLowerCase();
                     var value = ethers.parseEther(chooseAmount.value);
 
                     var options = {
-                        gasPrice: 20000000000,
+                        gasPrice: 1100000000,
                         gasLimit: 250000,
                         value: value,
                     };
 
+
                     registrar.register(name, options).then(function(tx) {
                         console.log(tx);
+                        document.getElementById('button-ethers').classList.add('disable');
+                        chooseName.readOnly = true;
+                        populate('hash', tx.hash);
+                    }, function(error) {
+                        console.log(error);
+                        alert(error.message);
                     });
                 }
 
@@ -838,15 +888,20 @@
 
                     var tx = {
                         data: data,
-                        gasPrice: 20000000000,
+                        gasPrice: 1100000000,
                         gasLimit: 250000,
                         to: registrar.address,
                         value: value.toHexString(),
                     };
                     console.log(tx);
 
+
                     window.web3.eth.sendTransaction(tx, function(error, hash) {
                         console.log(error, hash);
+                        document.getElementById('button-metamask').classList.add('disable');
+                        chooseName.readOnly = true;
+                        if (error) { alert(error.message); }
+                        populate('hash', hash);
                     });
                 }
             })();
